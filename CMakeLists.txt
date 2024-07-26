@@ -7,8 +7,13 @@ project(${BASENAME})
 set (CMAKE_CXX_STANDARD 17)
 
 aux_source_directory(src SRC_FILES)
-add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
+add_library(${PROJECT_NAME} SHARED ${SRC_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_LIST_DIR}/inc")
 
 add_executable (${PROJECT_NAME}test main.cpp)
 target_link_libraries (${PROJECT_NAME}test ${PROJECT_NAME})
+
+include(GNUInstallDirs)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                INCLUDES DESTINATION include)
+install(DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/inc/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
